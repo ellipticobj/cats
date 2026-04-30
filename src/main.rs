@@ -29,7 +29,7 @@ fn main() {
             Some(c) => c,
             None => 'x',
         };
-e
+
         if prefix != '-' {
             path = PathBuf::from(arg);
             break;
@@ -46,6 +46,8 @@ e
 }
 
 fn runcmd(args: Vec<String>, cmd: &str) -> () {
+    println!("{}: ", cmd);
+
     let mut command: Vec<String> = vec![cmd.to_string()];
 
     command.extend(args);
