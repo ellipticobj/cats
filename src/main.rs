@@ -1,5 +1,6 @@
 use std::{
     env,
+    io::{self, IsTerminal},
     path::PathBuf,
     process::{Command, Output},
 };
@@ -8,7 +9,7 @@ fn main() {
     let mut args: Vec<String> = env::args().collect(); // cats, arg1, arg2, etc
 
     if args.len() == 1 {
-        println!("meow");
+        runcmd(vec![], "ls");
         return;
     }
 
@@ -19,8 +20,10 @@ fn main() {
         return;
     } else if args[0] == "--cat-help" {
         runcmd(vec!["--help".to_string()], "cat");
+        return;
     } else if args[0] == "--ls-help" {
         runcmd(vec!["--help".to_string()], "ls");
+        return;
     }
 
     let mut path = PathBuf::from(&args[0]);
@@ -46,7 +49,9 @@ fn main() {
 }
 
 fn runcmd(args: Vec<String>, cmd: &str) -> () {
-    println!("{}: ", cmd);
+    if io::stdout().is_terminal() {
+        println!("{}: ", cmd);
+    }
 
     let mut command: Vec<String> = vec![cmd.to_string()];
 
@@ -73,7 +78,7 @@ fn printcommandoutput(output: Output) -> () {
         }
     } else if stderr.trim().is_empty() {
         for line in stdout.lines() {
-            println!("{}", line);
+            println!("{} ", line);
         }
     } else {
         println!("no output")
