@@ -18,6 +18,9 @@ fn main() {
     if args[0] == "--help" || args[0] == "-h" {
         printhelp();
         return;
+    } else if args[0] == "--version" || args[0] == "-v" {
+        printversion();
+        return;
     } else if args[0] == "--cat-help" {
         runcmd(vec!["--help".to_string()], "cat");
         return;
@@ -87,9 +90,16 @@ fn printcommandoutput(output: Output) -> () {
 
 fn printhelp() -> () {
     println!("cats");
-    println!("command line utility to combine both cat and ls");
+    println!("command line utility that combises both cat and ls");
+    println!();
+    println!("USAGE: cats [FILE]");
     println!("args:");
     println!("  --help\t\tprints this");
     println!("  --cat-help\t\truns cat --help (idk why ud use this)");
     println!("  --ls-help\t\truns ls --help (??)");
+}
+
+fn printversion() -> () {
+    println!("cats 0.2.0");
+    println!("meow mrow mrrp :3");
 }
